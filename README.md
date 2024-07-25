@@ -1,4 +1,4 @@
-# Linux_Cafe_Management_Project-
+# Linux Cafe Management Project
 # A Command-Line Interface System for Efficient Cafe Operations
 
 ## Course Information
