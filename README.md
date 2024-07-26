@@ -7,11 +7,12 @@
 - **Department:** Computer Science & Engineering, Chittagong University of Engineering & Technology
 
 ## Team Members
-- Shougata Paul (ID: 2004087)
-- Abid Al Hossain (ID: 2004088)
-- Arupa Barua (ID: 2004089)
-- Jannatul Farzana Rashumoni (ID: 2004090)
-- Md. Tasnimur Rahman (ID: 2004091)
+- Shougata Paul 
+- Abid Al Hossain
+- Arupa Barua 
+- Md. Tasnimur Rahman 
+- Jannatul Farzana Rashumoni 
+
 
 ## Project Overview
 This Cafe Management System is a shell script-based project designed to manage various aspects of cafe operations. It provides functionalities for managing orders, categories, food items, and generating bills, utilizing a MySQL database for data storage and retrieval.
