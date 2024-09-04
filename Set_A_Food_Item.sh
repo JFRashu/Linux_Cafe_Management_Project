@@ -1,7 +1,6 @@
 #!/bin/bash
-# Take_new_food_item.sh
+# Set_A_Food_Item.sh
 # Database credentials
-
 clear
 DB_USER="root"
 DB_PASS=""
@@ -13,6 +12,22 @@ MYSQL_EXECUTABLE="/mnt/d/xampp/mysql/bin/mysql.exe"  # Adjust the path as per yo
 # Declare arrays to store category titles and codes
 declare -a category_titles
 declare -a category_codes
+
+# Function to display all food items with their details and categories
+display_food_items() {
+    echo "Food Items Available:"
+    # Query the database to retrieve all food items and their details
+    food_items=$(echo "SELECT c.Ctgr_Title, f.\`Food Name\`, f.Price, f.Food_Code 
+                       FROM \`food items\` f
+                       JOIN category c ON f.Category_Code = c.Ctgr_Code;" | "$MYSQL_EXECUTABLE" -u "$DB_USER" "$DB_NAME" -N)
+    
+    # Display food items with their details and categories
+    IFS=$'\n' read -ra food_item_array <<< "$food_items"
+    for food_item in "${food_item_array[@]}"; do
+        IFS=$'\t' read -r category_title food_name price food_code <<< "$food_item"
+        echo "Category: $category_title | Food Name: $food_name | Price: $price | Code: $food_code"
+    done
+}
 
 # Function to display food categories and prompt user to select one
 select_category() {
@@ -53,7 +68,6 @@ select_category() {
     done
 }
 
-
 # Function to take input for new food item details and insert into database
 take_new_food_item() {
     # User input for new product details
@@ -69,11 +83,14 @@ take_new_food_item() {
     # Check the result of the MySQL command
     if [ $? -eq 0 ]; then
         echo "New product added successfully."
+        # Display the updated list of food items
+        display_food_items
     else
         echo "Error: $result"
     fi
 }
 
 # Main script
+display_food_items
 select_category
 take_new_food_item
