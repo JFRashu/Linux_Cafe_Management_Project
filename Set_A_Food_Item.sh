@@ -16,16 +16,21 @@ declare -a category_codes
 # Function to display all food items with their details and categories
 display_food_items() {
     echo "Food Items Available:"
-    # Query the database to retrieve all food items and their details
-    food_items=$(echo "SELECT c.Ctgr_Title, f.\`Food Name\`, f.Price, f.Food_Code 
-                       FROM \`food items\` f
-                       JOIN category c ON f.Category_Code = c.Ctgr_Code;" | "$MYSQL_EXECUTABLE" -u "$DB_USER" "$DB_NAME" -N)
+    # Declare arrays to store food details
+    declare -a food_codes
+    declare -a food_names
+    declare -a food_prices
+    declare -a food_amounts
     
-    # Display food items with their details and categories
-    IFS=$'\n' read -ra food_item_array <<< "$food_items"
-    for food_item in "${food_item_array[@]}"; do
-        IFS=$'\t' read -r category_title food_name price food_code <<< "$food_item"
-        echo "Category: $category_title | Food Name: $food_name | Price: $price | Code: $food_code"
+    # Query the database to retrieve food details and store them in arrays
+    while IFS=$'\t' read -r code name price; do
+        food_codes+=("$code")
+        food_names+=("$name")
+        food_prices+=("$price")
+    done < <(echo "SELECT Food_Code, \`Food Name\`, Price FROM \`food items\` ORDER BY Category_Code ASC ;" | "$MYSQL_EXECUTABLE" -u "$DB_USER" "$DB_NAME" -N)
+        # Display food items with their details
+    for index in "${!food_codes[@]}"; do
+        echo "$((index+1)). ${food_names[index]} - Price: ${food_prices[index]}"
     done
 }
 
@@ -94,3 +99,6 @@ take_new_food_item() {
 display_food_items
 select_category
 take_new_food_item
+display_food_items
+ echo ""
+    read -p "Press Enter to exit the program..." -r

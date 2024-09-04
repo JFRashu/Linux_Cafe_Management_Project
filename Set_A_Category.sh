@@ -36,6 +36,9 @@ display_categories() {
     done
 }
 
+echo "Current Food Category"
+display_categories
+
 # User input for new category name
 read -p "Enter new category name: " new_category_name
 

@@ -130,65 +130,8 @@ create_Bill()
     done
 }
 
-# Function to select food items for the order and insert into the "included in" table
-select_food_items() {
-    # Declare arrays to store food details
-    declare -a food_codes
-    declare -a food_names
-    declare -a food_prices
-    declare -a food_amounts
-    
-    # Query the database to retrieve food details and store them in arrays
-    while IFS=$'\t' read -r code name price; do
-        food_codes+=("$code")
-        food_names+=("$name")
-        food_prices+=("$price")
-    done < <(echo "SELECT Food_Code, \`Food Name\`, Price FROM \`food items\` ORDER BY Category_Code ASC ;" | "$MYSQL_EXECUTABLE" -u "$DB_USER" "$DB_NAME" -N)
-        # Display food items with their details
-    for index in "${!food_codes[@]}"; do
-        echo "$((index+1)). ${food_names[index]} - Price: ${food_prices[index]}"
-    done
-    # Loop until the user completes the order
-    while true; do
-
-        
-        # Prompt user for action
-        echo "Options:"
-        echo "1. Add more food items"
-        echo "2. Complete the order"
-        read -p "Enter your choice: " choice
-        
-        case $choice in
-            1)
-                # Prompt user to select food items
-                read -p "Enter the index of the food item to include in the order: " selected_index
-                if [[ $selected_index =~ ^[0-9]+$ && $selected_index -ge 1 && $selected_index -le ${#food_codes[@]} ]]; then
-                    # Get the index adjusted for array access
-                    index=$((selected_index-1))
-                    code="${food_codes[index]}"
-                    # Prompt user for the amount of the selected food item
-                    read -p "Enter the amount of '${food_names[index]}': " amount
-                    # Validate user input for amount
-                    if [[ $amount =~ ^[0-9]+$ && $amount -ge 1 ]]; then
-                        food_amounts+=("$amount")
-                        # Construct the SQL query to insert into the "included in" table
-                        query="INSERT INTO \`included in\` (Order_Code, Food_Code, Amounts) VALUES ('$order_code', '$code', '$amount');"
-                        # Execute the SQL query using the MySQL client
-                        result=$("$MYSQL_EXECUTABLE" -u "$DB_USER" "$DB_NAME" -e "$query" 2>&1)
-                        # Check the result of the MySQL command
-                        if [ $? -ne 0 ]; then
-                            echo "Error adding food item with code $code to the order: $result"
-                            exit 1
-                        fi
-                    else
-                        echo "Invalid amount. Please enter a valid number."
-                    fi
-                else
-                    echo "Invalid index. Please enter a valid index."
-                fi
-                ;;
-            2)
-                # Calculate total bill
+ # Calculate total bill
+                order_code=$(echo "SELECT MAX(Order_Code) FROM \`order\`;" | "$MYSQL_EXECUTABLE" -u "$DB_USER" "$DB_NAME" -N)
                 total_bill=0
                 
                 query2="SELECT sum(i.Amounts*f.Price) as \"\"
@@ -215,37 +158,3 @@ select_food_items() {
                 printf "Total bill: %s\n" "$total_bill"
 
                 create_Bill "$order_code" "$total_bill" "$customer_name" "$order_time"
-                return
-                ;;
-            *)
-                echo "Invalid choice. Please enter 1 or 2."
-                ;;
-        esac
-    done
-}
-
-# Main script
-echo "Create New Order:"
-# User input for order details
-read -p "Enter Customer name: " customer_name
-# Get current date and time
-order_time=$(date +"%Y-%m-%d %H:%M:%S")
-
-# Construct the SQL query to insert the new order into the "order" table
-query="INSERT INTO \`order\` (\`Customer Name\`, Time) VALUES ('$customer_name', '$order_time');"
-
-# Execute the SQL query using the MySQL client
-result=$("$MYSQL_EXECUTABLE" -u "$DB_USER" "$DB_NAME" -e "$query" 2>&1)
-
-# Check the result of the MySQL command
-if [ $? -eq 0 ]; then
-    echo "New order added successfully."
-    # Get the order code of the newly added order
-    order_code=$(echo "SELECT MAX(Order_Code) FROM \`order\`;" | "$MYSQL_EXECUTABLE" -u "$DB_USER" "$DB_NAME" -N)
-    # Display all food items with their details
-    # display_food_items
-    # Select food items for the order and insert into the "included in" table
-    select_food_items
-else
-    echo "Error: $result"
-fi
