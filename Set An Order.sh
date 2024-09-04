@@ -9,6 +9,14 @@ DB_NAME="os project"
 # Full path to the MySQL client executable in XAMPP
 MYSQL_EXECUTABLE="/mnt/d/xampp/mysql/bin/mysql.exe"  # Adjust the path as per your XAMPP installation
 
+# Function to display all food items with their details
+display_food_items() {
+    echo "Food Items Available:"
+    # Query the database to retrieve all food items and their details
+    food_items=$(echo "SELECT Food_Code, \`Food Name\`, Price FROM \`food items\`;" | "$MYSQL_EXECUTABLE" -u "$DB_USER" "$DB_NAME" -N)
+    # Display food items with their details
+    echo "$food_items"
+}
 # Create Bill 
 create_Bill() 
 {   
@@ -16,6 +24,13 @@ create_Bill()
     local total_bill="$2"
     local customer_name="$3"
     local order_time="$4"  
+    query_total_orders="SELECT COUNT(*) AS total_orders FROM \`order\` WHERE DATE(\`time\`) = CURDATE();"
+
+    total_orders=$(echo "$query_total_orders" | "$MYSQL_EXECUTABLE" -u "$DB_USER" "$DB_NAME" -N 2>&1)
+    if [ $? -ne 0 ]; then
+        echo "Error executing SQL query: $total_orders"
+        return 1
+    fi
 
     while true; do
         # Prompt user for action
@@ -227,7 +242,8 @@ if [ $? -eq 0 ]; then
     echo "New order added successfully."
     # Get the order code of the newly added order
     order_code=$(echo "SELECT MAX(Order_Code) FROM \`order\`;" | "$MYSQL_EXECUTABLE" -u "$DB_USER" "$DB_NAME" -N)
-
+    # Display all food items with their details
+    # display_food_items
     # Select food items for the order and insert into the "included in" table
     select_food_items
 else

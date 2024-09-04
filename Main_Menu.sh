@@ -3,6 +3,7 @@
 clear
 while true; do
     # Display menu options
+    clear
     echo "Main Menu:"
     echo "1. Set an order"
     echo "2. Set a new category"
