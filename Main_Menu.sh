@@ -1,9 +1,16 @@
 #!/bin/bash
 # Main_Menu.sh
 clear
+
 while true; do
     # Display menu options
     clear
+
+    #!/bin/bash
+    source ./header.sh
+    display_header
+
+    # Rest of your script content
     echo "Main Menu:"
     echo "1. Set an order"
     echo "2. Set a new category"

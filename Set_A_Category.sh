@@ -1,7 +1,11 @@
 #!/bin/bash
 # Set_A_Category.sh
 # Database credentials
-clear
+
+#!/bin/bash
+source ./header.sh
+display_header
+
 DB_USER="root"
 DB_PASS=""
 DB_NAME="os project"

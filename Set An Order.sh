@@ -1,7 +1,11 @@
 #!/bin/bash
 # Set\ An\ Order.sh
 # Database credentials
-clear
+
+#!/bin/bash
+source ./header.sh
+display_header
+
 DB_USER="root"
 DB_PASS=""
 DB_NAME="os project"
@@ -9,14 +13,7 @@ DB_NAME="os project"
 # Full path to the MySQL client executable in XAMPP
 MYSQL_EXECUTABLE="/mnt/d/xampp/mysql/bin/mysql.exe"  # Adjust the path as per your XAMPP installation
 
-# Function to display all food items with their details
-display_food_items() {
-    echo "Food Items Available:"
-    # Query the database to retrieve all food items and their details
-    food_items=$(echo "SELECT Food_Code, \`Food Name\`, Price FROM \`food items\`;" | "$MYSQL_EXECUTABLE" -u "$DB_USER" "$DB_NAME" -N)
-    # Display food items with their details
-    echo "$food_items"
-}
+
 # Create Bill 
 create_Bill() 
 {   
@@ -116,7 +113,11 @@ create_Bill()
                 
                 # Delete the TXT file
                 rm "$txt_file_name"
-                clear
+                
+                #!/bin/bash
+                source ./header.sh
+                display_header
+                
                 echo "Your order bill is created and order code is $order_code" 
                 # Prepare the PDF file for printing
                 # You can use a command such as lp (Line Printer) to send the PDF file to the printer

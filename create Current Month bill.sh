@@ -1,7 +1,10 @@
 #!/bin/bash
 # Set\ An\ Order.sh
 # Database credentials
-clear
+
+source ./header.sh
+display_header
+
 DB_USER="root"
 DB_PASS=""
 DB_NAME="os project"
