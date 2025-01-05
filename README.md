@@ -1,5 +1,5 @@
 # Linux Cafe Management Project
-# A Command-Line Interface System for Efficient Cafe Operations ( SAART BREWS )
+# A Command-Line Interface System for Efficient Cafe Operations
 
 ## Course Information
 - **Course:** Operating System (Sessional)
