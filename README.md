@@ -1,6 +1,24 @@
 # Linux Cafe Management Project
 # A Command-Line Interface System for Efficient Cafe Operations
 
+📄 **[View Complete Project Manual (PDF)](Project_Manual.pdf)** - Detailed documentation with screenshots and workflows
+
+## Table of Contents
+- [Course Information](#course-information)
+- [Team Members](#team-members)
+- [Documentation](#documentation)
+- [Project Overview](#project-overview)
+- [Key Features](#key-features)
+- [Technologies Used](#technologies-used)
+- [Prerequisites](#prerequisites)
+- [Installation](#installation)
+- [Project Structure](#project-structure)
+- [System Workflow](#system-workflow)
+- [Usage Guide](#usage-guide)
+- [Troubleshooting](#troubleshooting)
+- [Future Enhancements](#future-enhancements)
+- [Acknowledgements](#acknowledgements)
+
 ## Course Information
 - **Course:** Operating System (Sessional)
 - **Course Code:** CSE-336
@@ -13,57 +31,364 @@
 - Md. Tasnimur Rahman 
 - Jannatul Farzana Rashumoni 
 
-
 ## Project Overview
-This Cafe Management System is a shell script-based project designed to manage various aspects of cafe operations. It provides functionalities for managing orders, categories, food items, and generating bills, utilizing a MySQL database for data storage and retrieval.
+This Cafe Management System is an integrated shell script-based project designed to manage various aspects of a cafe's operations. It provides functionalities for managing orders, categories, food items, and generating bills. The system utilizes a MySQL database for data storage and retrieval, making it a robust solution for small to medium-sized cafes.
+
+## Documentation
+
+For comprehensive documentation including detailed workflows, screenshots, and system architecture, please refer to:
+
+📘 **[Project Manual PDF](Project_Manual.pdf)** - Complete guide with:
+- Detailed installation instructions
+- Step-by-step usage workflows with screenshots
+- Database structure and setup
+- Troubleshooting guide
+- System flowcharts and diagrams
+- Example outputs and bills
 
 ## Key Features
-- Order management
-- Category and food item addition
-- Daily and monthly bill calculation
-- PDF bill generation
-- Automatic old bill deletion
+- **Order Management:** Create and process customer orders with itemized billing
+- **Category Management:** Add and organize food categories
+- **Food Item Management:** Add new menu items with pricing
+- **Daily Bill Calculation:** Generate comprehensive daily sales reports
+- **Monthly Bill Calculation:** Track monthly revenue and order statistics
+- **PDF Bill Generation:** Automatic conversion of bills to professional PDF format
+- **Automatic Storage Management:** Delete old PDF files (older than 7 days) to optimize storage
 
 ## Technologies Used
 - Bash shell scripting
 - MySQL database
 - XAMPP (for MySQL and Apache)
 - wkhtmltopdf (for PDF generation)
+- dos2unix (for script file conversion)
 
 ## Prerequisites
 - Bash shell
 - MySQL database
 - XAMPP (for MySQL and Apache)
 - wkhtmltopdf (for PDF generation)
+- All Shell Script files should be made executable using "dos2unix"
 
 ## Installation
-1. Install XAMPP on your system.
-2. Install wkhtmltopdf and ensure it's added to system's PATH.
-3. Clone or download the project files to local machine.
-4. Import the os_project.sql file into MySQL database using phpMyAdmin or MySQL command line.
+
+### Step 1: Install XAMPP
+Install XAMPP on your system to provide MySQL and Apache services.
+
+### Step 2: Install wkhtmltopdf
+Install wkhtmltopdf and ensure it's added to your system's PATH.
+
+### Step 3: Download Project Files
+Clone or download the project files to your local machine.
+
+### Step 4: Database Setup
+1. Open phpMyAdmin through XAMPP
+2. Create a new database named **"os_project"**
+3. Import the `os_project.sql` file into this database
+
+The database includes the following tables:
+- **category:** Stores food categories
+- **food_items:** Stores individual food items
+- **included_in:** Links orders with food items
+- **order:** Stores order information
 
 ## Project Structure
-- Main_Menu.sh: The main script that provides the user interface.
-- Set An Order.sh: Handles the process of creating new orders.
-- Set_A_Category.sh: Allows adding new food categories.
-- Set_A_Food_Item.sh: Enables adding new food items to the menu.
-- create bill.sh: Generates bills for individual orders.
-- create Current Month bill.sh: Generates a bill for the current month.
-- create Total bill.sh: Generates a bill for the current day.
-- delete_pdf.sh: Manages storage by deleting old PDF files.
-- os_project.sql: SQL file containing the database structure.
+
+```
+cafe-management-system/
+├── Main_Menu.sh                    # Main interface script
+├── Set An Order.sh                 # Order creation handler
+├── Set_A_Category.sh               # Category addition script
+├── Set_A_Food_Item.sh              # Food item addition script
+├── create Current Month bill.sh    # Monthly bill generator
+├── create Total bill.sh            # Daily bill generator
+├── delete_pdf.sh                   # Storage management script
+├── os_project.sql                  # Database structure file
+├── Orders/                         # Individual order PDFs
+├── Daily_Bills/                    # Daily sales reports
+└── Monthly_Bills/                  # Monthly sales reports
+```
+
+## System Workflow
+
+### Main Menu Flow
+```
+Start
+  ↓
+Display Main Menu
+  ↓
+User selects an option
+  ↓
+┌─────────────────────────────────────────────────────────────────┐
+│  1. Set an order                                                │
+│  2. Set a new category                                          │
+│  3. Set a new food item                                         │
+│  4. Calculate total bill for today                              │
+│  5. Calculate total bill for current month                      │
+│  6. Delete Order PDF                                            │
+│  7. Exit                                                        │
+└─────────────────────────────────────────────────────────────────┘
+  ↓
+Process the selected option
+  ↓
+Return to Main Menu (unless Exit is chosen)
+  ↓
+End
+```
 
 ## Usage Guide
-Run ./Main_Menu.sh and follow the on-screen prompts to navigate through different functionalities.
+
+### 1. Starting the System
+```bash
+./Main_Menu.sh
+```
+
+The system presents a clear and intuitive main menu serving as the central command center for all cafe management activities.
+
+### 2. Create New Order (Option 1)
+
+**Workflow:**
+1. Enter customer name
+2. View available food items with prices
+3. Select items by index number
+4. Specify quantities for each item
+5. Choose to add more items or complete the order
+6. Review order summary and total bill
+7. System generates PDF bill automatically
+
+**Example Process:**
+```
+Enter Customer name: Shougata
+Available Items:
+1. Drinko - Price: 25
+2. Sprite - Price: 25
+3. 7up - Price: 25
+4. Milk_Tea - Price: 15
+5. Custard - Price: 75
+6. Black_Coffee - Price: 20
+
+Enter the index of the food item: 1
+Enter the amount: 1
+Options:
+1. Add more food items
+2. Complete the order
+```
+
+The system generates a formatted PDF bill stored in the `Orders/` directory.
+
+### 3. Add New Category (Option 2)
+
+**Workflow:**
+1. View current food categories
+2. Enter new category name
+3. System confirms addition
+4. Updated category list is displayed
+
+**Example:**
+```
+Current Categories:
+1. Drinks (Code: 1)
+2. Chips (Code: 2)
+3. Tea (Code: 3)
+4. Dessert (Code: 4)
+
+Enter new category name: Coffee
+New Category added successfully.
+```
+
+### 4. Add New Food Item (Option 3)
+
+**Workflow:**
+1. View existing categories
+2. Select category by code
+3. Enter food item name
+4. Enter food item price
+5. System confirms addition
+
+**Example:**
+```
+Select a category for the new food item:
+1. Drinks
+2. Chips
+3. Tea
+4. Dessert
+5. Coffee
+
+Enter the number of the category: 5
+Selected category: Coffee (Code: 5)
+Enter product name: Black_Coffee
+Enter product price: 20
+New product added successfully.
+```
+
+### 5. Calculate Daily Bill (Option 4)
+
+**Workflow:**
+1. System retrieves all orders for current day
+2. Calculates total sales amount
+3. Generates detailed bill with:
+   - Bill date
+   - Total number of orders
+   - Itemized list (Food Name, Amount, Price, Cost)
+   - Grand total
+4. Converts to PDF and stores in `Daily_Bills/` directory
+
+**Sample Output:**
+```
+Bill Date        : 2024-09-04
+Total Orders     : 8
+
+--------------------------Bill Details--------------------------
+| Food Name      | Amount    | Price     | Cost (Tk)         |
+----------------------------------------------------------------
+  Custard        | 2         | 75        | 150
+  Drinko         | 15        | 25        | 375
+  Milk_Tea       | 3         | 15        | 45
+  Sprite         | 2         | 25        | 50
+----------------------------------------------------------------
+Total Bill:                                      620.00 Tk
+```
+
+### 6. Calculate Monthly Bill (Option 5)
+
+**Workflow:**
+1. System retrieves all orders for current month
+2. Aggregates sales data
+3. Generates comprehensive monthly report
+4. Converts to PDF and stores in `Monthly_Bills/` directory
+
+The format is similar to the daily bill but covers the entire month's transactions.
+
+### 7. Delete Old PDF Files (Option 6)
+
+**Workflow:**
+1. System scans `Orders/`, `Daily_Bills/`, and `Monthly_Bills/` directories
+2. Identifies PDF files older than 7 days
+3. Deletes identified files
+4. Confirms deletion
+
+This feature helps maintain organized storage without manual file management.
+
+### 8. Exit (Option 7)
+Safely exits the system with confirmation to prevent accidental closure.
+
+## Features and Functionality
+
+### Comprehensive Management System
+The Cafe Management System offers a user-friendly experience designed to streamline cafe operations from the moment the user launches the main script. The system stands ready to assist with a wide array of management tasks, ensuring efficient handling of everything from customer orders to financial reporting.
+
+### Intuitive Interface
+Upon startup, users are welcomed by a clear main menu that prioritizes clarity and ease of use, allowing even novice users to navigate the system with confidence and efficiency.
+
+### Flexible Workflow
+The system's flexibility shines through in its ability to seamlessly transition between tasks. After completing one operation, users are gracefully returned to the main menu, allowing for a fluid workflow that can encompass multiple management tasks in a single session.
+
+### Professional Billing
+All bills are automatically generated in professional PDF format using wkhtmltopdf, ensuring that customer receipts and financial reports are presentation-ready.
+
+## Troubleshooting
+
+### Critical: XAMPP MySQL Executable Path
+
+One of the most critical steps for this project to function correctly is ensuring the proper path to the MySQL executable is set.
+
+**In all scripts that interact with the database, you'll find:**
+```bash
+DB_USER="root"
+DB_PASS=""
+DB_NAME="os_project"
+
+# Full path to the MySQL client executable in XAMPP
+MYSQL_EXECUTABLE="/mnt/d/xampp/mysql/bin/mysql.exe"
+```
+
+**Common issues and solutions:**
+- **Incorrect path:** Verify the exact location of mysql.exe on your system
+- **Different operating systems:** The path format may differ between Windows, macOS, and Linux
+
+**To fix:**
+1. Locate the mysql.exe file in your XAMPP installation directory
+2. Update the MYSQL_EXECUTABLE variable in all relevant scripts with the correct path
+3. Use forward slashes (/) even on Windows systems for consistency
+
+### XAMPP Services Issues
+
+**Before running any scripts, ensure:**
+- Both Apache and MySQL services are started in the XAMPP Control Panel
+- Both services show a green status indicator
+
+**Common errors:**
+- Scripts failing to connect to the database
+- "Connection refused" errors
+
+**To fix:**
+1. Open XAMPP Control Panel
+2. Start both Apache and MySQL services
+3. Verify green status indicators before running scripts
+
+### PDF Generation Issues
+
+**Common problems:**
+- PDF files not being created
+- wkhtmltopdf command not found
+
+**Solutions:**
+- Verify wkhtmltopdf is properly installed on your system
+- Check if the wkhtmltopdf executable is in your system's PATH
+- Ensure you have write permissions in the directories where PDFs are being saved
+
+### Database-Related Issues
+
+**Common problems:**
+- Connection failures
+- Table not found errors
+- SQL syntax errors
+
+**Solutions:**
+- Verify the database name, user, and password are correctly set in all scripts
+- Ensure the "os_project" database exists and contains all necessary tables
+- Check for any SQL syntax errors if you've modified database queries
+- Verify that the imported SQL file created all required tables
 
 ## Future Enhancements
-- Graphical user interface
-- Integration with point-of-sale systems
-- Advanced reporting features
+
+- **Graphical User Interface:** Develop a GUI for easier navigation
+- **Point-of-Sale Integration:** Connect with hardware POS systems
+- **Advanced Reporting:** Include charts, graphs, and trend analysis
+- **Inventory Management:** Track stock levels and automatic reordering
+- **Employee Management:** Track staff hours and sales performance
+- **Customer Loyalty Program:** Implement reward points system
+- **Multi-language Support:** Add support for multiple languages
+- **Cloud Backup:** Automatic backup to cloud storage
+- **Mobile Application:** Create companion mobile app for orders
+- **Real-time Dashboard:** Live monitoring of sales and operations
+
+## Conclusion
+
+The Cafe Management System provides a comprehensive solution for managing cafe operations with an intuitive interface for order management, menu customization, and financial reporting. The system's ability to generate PDF bills and manage storage automatically enhances its utility for day-to-day cafe management.
+
+This project demonstrates the practical application of shell scripting, database management, and system integration in creating a functional business solution. It serves as an excellent example of how command-line tools can be leveraged to create a user-friendly management system.
+
+The modular nature of the project allows for easy expansion and customization to meet specific cafe needs, making it adaptable for various business scenarios.
+
+**For detailed visual documentation, system flowcharts, and screenshots of the system in action, please refer to the [Project Manual PDF](Project_Manual.pdf).**
 
 ## Acknowledgements
+
 We would like to thank our course instructors:
-- MD. Shafiul Alam Forhad, Assistant Professor, CSE, CUET
-- Hasan Murad, Assistant Professor, CSE, CUET
+- **MD. Shafiul Alam Forhad**, Assistant Professor, CSE, CUET
+- **Hasan Murad**, Assistant Professor, CSE, CUET
 
 for their guidance and support throughout this project.
+
+## License
+
+This project was developed as part of the Operating System (Sessional) course at Chittagong University of Engineering & Technology.
+
+---
+
+## Additional Resources
+
+- 📄 **[Complete Project Manual (PDF)](Project_Manual.pdf)** - Includes detailed workflows, screenshots, and troubleshooting
+- 🔗 **GitHub Repository:** https://github.com/JFRashu/Linux_Cafe_Management_Project
+
+**For issues or questions, please contact any of the team members listed above.**
