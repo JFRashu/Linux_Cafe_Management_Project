@@ -392,3 +392,4 @@ This project was developed as part of the Operating System (Sessional) course at
 - 🔗 **GitHub Repository:** https://github.com/JFRashu/Linux_Cafe_Management_Project
 
 **For issues or questions, please contact any of the team members listed above.**
+[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/JFRashu/Linux_Cafe_Management_Project)
