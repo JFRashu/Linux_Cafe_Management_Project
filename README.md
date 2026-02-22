@@ -184,16 +184,6 @@ MYSQL_EXECUTABLE="/mnt/d/xampp/mysql/bin/mysql.exe"
 - Check for any SQL syntax errors if you've modified database queries
 - Verify that the imported SQL file created all required tables
 
-## Conclusion
-
-The Cafe Management System provides a comprehensive solution for managing cafe operations with an intuitive interface for order management, menu customization, and financial reporting. The system's ability to generate PDF bills and manage storage automatically enhances its utility for day-to-day cafe management.
-
-This project demonstrates the practical application of shell scripting, database management, and system integration in creating a functional business solution. It serves as an excellent example of how command-line tools can be leveraged to create a user-friendly management system.
-
-The modular nature of the project allows for easy expansion and customization to meet specific cafe needs, making it adaptable for various business scenarios.
-
-**For detailed visual documentation, system flowcharts, and screenshots of the system in action, please refer to the [Project Manual PDF](Project_Manual.pdf).**
-
 ## Acknowledgements
 
 We would like to thank our course instructors:
@@ -207,11 +197,6 @@ for their guidance and support throughout this project.
 This project was developed as part of the Operating System (Sessional) course at Chittagong University of Engineering & Technology.
 
 ---
-
-## Additional Resources
-
-- 📄 **[Complete Project Manual (PDF)](Project_Manual.pdf)** - Includes detailed workflows, screenshots, and troubleshooting
-- 🔗 **GitHub Repository:** https://github.com/JFRashu/Linux_Cafe_Management_Project
 
 **For issues or questions, please contact any of the team members listed above.**
 [![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/JFRashu/Linux_Cafe_Management_Project)
