@@ -16,7 +16,6 @@
 - [System Workflow](#system-workflow)
 - [Usage Guide](#usage-guide)
 - [Troubleshooting](#troubleshooting)
-- [Future Enhancements](#future-enhancements)
 - [Acknowledgements](#acknowledgements)
 
 ## Course Information
@@ -348,19 +347,6 @@ MYSQL_EXECUTABLE="/mnt/d/xampp/mysql/bin/mysql.exe"
 - Ensure the "os_project" database exists and contains all necessary tables
 - Check for any SQL syntax errors if you've modified database queries
 - Verify that the imported SQL file created all required tables
-
-## Future Enhancements
-
-- **Graphical User Interface:** Develop a GUI for easier navigation
-- **Point-of-Sale Integration:** Connect with hardware POS systems
-- **Advanced Reporting:** Include charts, graphs, and trend analysis
-- **Inventory Management:** Track stock levels and automatic reordering
-- **Employee Management:** Track staff hours and sales performance
-- **Customer Loyalty Program:** Implement reward points system
-- **Multi-language Support:** Add support for multiple languages
-- **Cloud Backup:** Automatic backup to cloud storage
-- **Mobile Application:** Create companion mobile app for orders
-- **Real-time Dashboard:** Live monitoring of sales and operations
 
 ## Conclusion
 
